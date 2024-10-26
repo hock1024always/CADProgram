@@ -3,7 +3,13 @@
 #define SHAPE_H
 
 // 定义 ShapeType 枚举类型，表示图形类型
-enum class ShapeType { Rectangle, Circle, Triangle, Ellipse, Diamond };
+enum class ShapeType {
+    AndGate, 
+    OrGate, 
+    NotGate, 
+    OnPin, 
+    OffPin 
+};
 
 // 定义 Shape 结构体，表示图形的位置和类型
 struct Shape {

@@ -15,66 +15,27 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BoundingBox.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Component.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Drawing.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="DrawingPanel.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="MainFrame.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="MyApp.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="MyFrame.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Pin.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="PointGrid.cpp">
+    <ClCompile Include="DrawingPanel.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Sidebar.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="PointGrid.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BoundingBox.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Component.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Drawing.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="DrawingPanel.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
     <ClInclude Include="MainFrame.h">
       <Filter>源文件</Filter>
     </ClInclude>
-    <ClInclude Include="MyApp.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="MyFrame.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Pin.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="PointGrid.h">
+    <ClInclude Include="DrawingPanel.h">
       <Filter>源文件</Filter>
     </ClInclude>
     <ClInclude Include="Shape.h">
@@ -83,10 +44,8 @@
     <ClInclude Include="Sidebar.h">
       <Filter>源文件</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="README.md">
+    <ClInclude Include="PointGrid.h">
       <Filter>源文件</Filter>
-    </None>
+    </ClInclude>
   </ItemGroup>
 </Project>
