@@ -17,6 +17,17 @@ private:
     void OnEllipseButton(wxCommandEvent& event);    // 处理椭圆按钮点击事件
     void OnDiamondButton(wxCommandEvent& event);    // 处理菱形按钮点击事件
 
+    void OnNewFile(wxCommandEvent& event);         // 处理新建文件事件
+    void OnOpenFile(wxCommandEvent& event);        // 处理打开文件事件
+    void OnSaveFile(wxCommandEvent& event);        // 处理保存文件事件
+    void OnSaveAsFile(wxCommandEvent& event);      // 处理另存为文件事件
+    void OnCloseFile(wxCommandEvent& event);       // 处理关闭文件事件
+    void OnPrintFile(wxCommandEvent& event);       // 处理打印文件事件
+    void OnExit(wxCommandEvent& event);            // 处理退出程序事件
+
+    static ShapeType ShapeTypeFromString(const wxString& str); // 辅助函数：从字符串转换为 ShapeType
+    static wxString ShapeTypeToString(ShapeType type);         // 辅助函数：从 ShapeType 转换为字符串
+
     wxStaticText* infoText; // 用于显示释放的图形信息
     DrawingPanel* drawingPanel; // 指向绘图面板的指针
 };

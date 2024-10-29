@@ -1,10 +1,25 @@
 #include "PointGrid.h"
 
+// 默认构造函数
+PointGrid::PointGrid() : panel(nullptr), spacing(10) {}
+
 // 构造函数，初始化网格背景的面板和间距
 PointGrid::PointGrid(wxPanel* panel, int spacing) : panel(panel), spacing(spacing) {}
 
+// 设置面板
+void PointGrid::SetPanel(wxPanel* panel) {
+    this->panel = panel;
+}
+
+// 设置间距
+void PointGrid::SetSpacing(int spacing) {
+    this->spacing = spacing;
+}
+
 // 绘制网格背景
 void PointGrid::Draw(wxBufferedPaintDC& dc) {
+    if (!panel) return; // 如果面板未设置，直接返回
+
     // 设置网格的背景颜色
     wxBrush brush(wxColour(220, 226, 241)); // 背景颜色
     dc.SetBrush(brush);
