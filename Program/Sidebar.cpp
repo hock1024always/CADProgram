@@ -28,6 +28,13 @@ Sidebar::Sidebar(wxFrame* parent, DrawingPanel* drawingPanel, int width)
     // 将文件菜单添加到菜单栏
     menuBar->Append(fileMenu, "&文件");
 
+    // 创建窗口菜单
+    wxMenu* windowMenu = new wxMenu();
+    windowMenu->Append(wxID_ANY, "&最小化\tCtrl+M", "最小化窗口");
+    windowMenu->Append(wxID_ANY, "&最大化\tCtrl+Shift+M", "最大化窗口");
+    windowMenu->Append(wxID_ANY, "&关闭\tCtrl+Shift+W", "关闭窗口");
+    menuBar->Append(windowMenu, "&窗口");
+
     // 创建帮助菜单
     wxMenu* helpMenu = new wxMenu();
     helpMenu->Append(wxID_ABOUT, "&关于\tF1");
@@ -73,6 +80,11 @@ Sidebar::Sidebar(wxFrame* parent, DrawingPanel* drawingPanel, int width)
     parent->Bind(wxEVT_MENU, &Sidebar::OnCloseFile, this, wxID_CLOSE);
     parent->Bind(wxEVT_MENU, &Sidebar::OnPrintFile, this, wxID_PRINT);
     parent->Bind(wxEVT_MENU, &Sidebar::OnExit, this, wxID_EXIT);
+
+    // 绑定窗口菜单事件
+    parent->Bind(wxEVT_MENU, &Sidebar::OnMinimize, this, windowMenu->FindItem("&最小化\tCtrl+M"));
+    parent->Bind(wxEVT_MENU, &Sidebar::OnMaximize, this, windowMenu->FindItem("&最大化\tCtrl+Shift+M"));
+    parent->Bind(wxEVT_MENU, &Sidebar::OnClose, this, windowMenu->FindItem("&关闭\tCtrl+Shift+W"));
 }
 
 void Sidebar::OnRectButton(wxCommandEvent& event) {
@@ -188,6 +200,27 @@ void Sidebar::OnPrintFile(wxCommandEvent& event) {
 
 void Sidebar::OnExit(wxCommandEvent& event) {
     Close(true); // 退出程序
+}
+
+void Sidebar::OnMinimize(wxCommandEvent& event) {
+    wxTopLevelWindow* topLevelWindow = wxDynamicCast(GetParent(), wxTopLevelWindow);
+    if (topLevelWindow) {
+        topLevelWindow->Iconize(true);
+    }
+}
+
+void Sidebar::OnMaximize(wxCommandEvent& event) {
+    wxTopLevelWindow* topLevelWindow = wxDynamicCast(GetParent(), wxTopLevelWindow);
+    if (topLevelWindow) {
+        topLevelWindow->Maximize(true);
+    }
+}
+
+void Sidebar::OnClose(wxCommandEvent& event) {
+    wxTopLevelWindow* topLevelWindow = wxDynamicCast(GetParent(), wxTopLevelWindow);
+    if (topLevelWindow) {
+        topLevelWindow->Close(true);
+    }
 }
 
 // 辅助函数：从字符串转换为 ShapeType
