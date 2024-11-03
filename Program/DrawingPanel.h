@@ -8,13 +8,7 @@
 #include "PointGrid.h"
 #include <cmath>  // 用于计算平方根和平方
 
-// 定义锚点结构
-struct AnchorPoint {
-    int x;
-    int y;
 
-    AnchorPoint(int x, int y) : x(x), y(y) {}
-};
 
 // 定义 DrawingPanel 类，继承自 wxPanel，用于处理绘图事件
 class DrawingPanel : public wxPanel {

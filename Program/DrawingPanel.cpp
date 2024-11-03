@@ -2,6 +2,7 @@
 #include <cmath>  // 用于计算平方根和平方
 #include <algorithm> // 用于 std::min 和 std::max
 
+
 // 构造函数，初始化绘图面板并创建点状图
 DrawingPanel::DrawingPanel(wxFrame* parent)
     : wxPanel(parent, wxID_ANY), pointGrid(this, 10) { // 设置点的间距为10像素
@@ -126,13 +127,16 @@ void DrawingPanel::OnPaint(wxPaintEvent& event) {
 
 // 检查是否在锚点的判断域内（圆形区域）
 bool DrawingPanel::IsPointOnAnchor(int x, int y) {
-    for (const auto& anchor : anchorPoints) {
-        // 计算点击点与锚点的距离
-        double distance = std::sqrt(std::pow(x - anchor.x, 2) + std::pow(y - anchor.y, 2));
+    for (size_t i = 0; i < shapes.size(); ++i) {
+        anchorPoints = shapes[i].getanchorPoints();
+        for (const auto& anchor : anchorPoints) {
+            // 计算点击点与锚点的距离
+            double distance = std::sqrt(std::pow(x - anchor.x, 2) + std::pow(y - anchor.y, 2));
 
-        // 如果距离小于等于锚点的判断域半径，则认为在锚点上
-        if (distance <= anchorRadius) {
-            return true;
+            // 如果距离小于等于锚点的判断域半径，则认为在锚点上
+            if (distance <= anchorRadius) {
+                return true;
+            }
         }
     }
     return false;
@@ -152,7 +156,7 @@ void DrawingPanel::OnLeftDown(wxMouseEvent& event) {
         // 如果点击在锚点上，记录锚点坐标为起点
         currentLine.startX = mouseX;
         currentLine.startY = mouseY;
-        return; // 退出函数，因为已经开始绘制线
+        return; // 退出函数
     }
 
     // 遍历所有图形，检查鼠标是否在某个图形内部
@@ -164,11 +168,11 @@ void DrawingPanel::OnLeftDown(wxMouseEvent& event) {
             return; // 退出函数，因为已经开始拖动
         }
     }
+    currentLine.startX = 0;
+    currentLine.startY = 0;
+    return;//两种情况都不是 标记为0
 
-    // 如果没有点击到任何图形或锚点，开始绘制新的线
-    currentLine.startX = mouseX; // 记录线的起点
-    currentLine.startY = mouseY;
-}
+}//分为两种情况 在锚点上和在图形上
 
 // 处理鼠标左键释放事件
 void DrawingPanel::OnLeftUp(wxMouseEvent& event) {
@@ -177,24 +181,19 @@ void DrawingPanel::OnLeftUp(wxMouseEvent& event) {
         dragging = false; // 结束拖动状态
     }
     else {
-        // 如果没有拖动图形，则处理线的绘制
-        int endX = event.GetX(); // 记录线的终点
-        int endY = event.GetY();
+        if (currentLine.startX != 0 || currentLine.startY != 0) {//说明起始点在锚点上，处理线的绘制
+            int endX = event.GetX(); // 记录线的终点
+            int endY = event.GetY();
 
-        // 将终点坐标对齐到点状网格
-        SnapToPoint(endX, endY);
+            // 将终点坐标对齐到点状网格
+            SnapToPoint(endX, endY);
 
-        // 检查是否释放位置在某个锚点上
-        if (IsPointOnAnchor(endX, endY)) {
-            // 如果释放位置在锚点上，则将终点设置为这个锚点的坐标
-            endX = currentLine.startX;
-            endY = currentLine.startY;
+
+            // 计算最多三条平行于网格边的线段
+            std::vector<Line> segments = CalculateSegments(currentLine.startX, currentLine.startY, endX, endY);
+            // 将计算出的线段添加到线段列表中
+            lines.insert(lines.end(), segments.begin(), segments.end());
         }
-
-        // 计算最多三条平行于网格边的线段
-        std::vector<Line> segments = CalculateSegments(currentLine.startX, currentLine.startY, endX, endY);
-        // 将计算出的线段添加到线段列表中
-        lines.insert(lines.end(), segments.begin(), segments.end());
     }
     // 刷新面板以更新显示
     Refresh();

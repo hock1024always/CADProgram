@@ -2,6 +2,14 @@
 #ifndef SHAPE_H
 #define SHAPE_H
 
+// 定义锚点结构
+struct AnchorPoint {
+    int x;
+    int y;
+
+    AnchorPoint(int x, int y) : x(x), y(y) {}
+};
+
 // 定义 ShapeType 枚举类型，表示图形类型
 enum class ShapeType {
     AndGate,
@@ -16,6 +24,43 @@ enum class ShapeType {
 struct Shape {
     ShapeType type; // 图形的类型
     int x, y;       // 图形的位置坐标
+    std::vector<AnchorPoint> getanchorPoints() {
+        std::vector<AnchorPoint>AnchorPoint;
+        switch (type) {
+        case ShapeType::AndGate:
+            AnchorPoint.emplace_back(x - 20, y + 10);
+            AnchorPoint.emplace_back(x - 20, y - 10);
+            AnchorPoint.emplace_back(x + 30, y);
+            AnchorPoint.emplace_back(x - 20, y + 20);
+            AnchorPoint.emplace_back(x - 20, y - 20);
+            AnchorPoint.emplace_back(x - 20, y);
+            break;
+        
+        case ShapeType::OrGate:
+            AnchorPoint.emplace_back(x - 10, y + 20);
+            AnchorPoint.emplace_back(x - 10, y - 20);
+            AnchorPoint.emplace_back(x - 10, y + 10);
+            AnchorPoint.emplace_back(x - 10, y - 10);
+            AnchorPoint.emplace_back(x - 10, y);
+            AnchorPoint.emplace_back(x + 30, y);
+            break;
+        
+        case ShapeType::NotGate:
+            AnchorPoint.emplace_back(x - 20, y);
+            AnchorPoint.emplace_back(x + 10, y);
+            break;
+        
+        case ShapeType::OnPin:
+            AnchorPoint.emplace_back(x - 10, y);
+            break;
+        
+        case ShapeType::OffPin:
+            AnchorPoint.emplace_back(x + 10, y);
+            break;
+
+        }
+        return AnchorPoint;
+    }
 };
 
 // 定义 Line 结构体，表示线条的起点和终点
