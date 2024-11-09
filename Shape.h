@@ -4,11 +4,12 @@
 
 // 定义 ShapeType 枚举类型，表示图形类型
 enum class ShapeType {
-    AndGate, 
-    OrGate, 
-    NotGate, 
-    OnPin, 
-    OffPin 
+    AndGate,
+    OrGate,
+    NotGate,
+    OnPin,
+    OffPin,
+    Unknown // 添加 Unknown 成员
 };
 
 // 定义 Shape 结构体，表示图形的位置和类型

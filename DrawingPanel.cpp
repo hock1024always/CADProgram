@@ -18,70 +18,106 @@ void DrawingPanel::OnPaint(wxPaintEvent& event) {
     pointGrid.Draw(dc); // 绘制点状图
 
     for (const auto& shape : shapes) {
-    // 设置黄色的画笔和画刷
-    dc.SetPen(wxPen(wxColour(255, 255, 0))); // 黄色画笔
-    dc.SetBrush(wxBrush(wxColour(255, 255, 0))); // 黄色画刷
+        switch (shape.type) {
+        case ShapeType::AndGate:
+            dc.SetPen(wxPen(wxColour(255, 255, 0))); // 黄色画笔
+            dc.SetBrush(wxBrush(wxColour(255, 255, 0))); // 黄色画刷
+            dc.DrawRectangle(shape.x - 20, shape.y - 30, 20, 60);//门的左侧
+            dc.DrawArc(shape.x, shape.y + 30, shape.x, shape.y - 30, shape.x, shape.y);//门的右侧
+            dc.FloodFill(shape.x, shape.y, *wxYELLOW, wxFLOOD_SURFACE);//洪水填充 
+            // 添加黑色实心小圆
+            dc.SetPen(*wxBLACK_PEN); // 恢复黑色画笔
+            dc.SetBrush(*wxBLACK_BRUSH); // 恢复黑色画刷
+            dc.DrawCircle(shape.x - 20, shape.y + 10, 2);
+            dc.DrawCircle(shape.x - 20, shape.y - 10, 2);
+            dc.DrawCircle(shape.x + 30, shape.y, 2);
+            dc.DrawCircle(shape.x - 20, shape.y + 20, 2);
+            dc.DrawCircle(shape.x - 20, shape.y - 20, 2);
+            dc.DrawCircle(shape.x - 20, shape.y, 2);
+            break;
 
-    switch (shape.type) {
-    case ShapeType::AndGate:
-        // 正方形的中心点为 shape.x, shape.y，边长为 40
-        dc.DrawRectangle(shape.x - 20, shape.y - 20, 40, 40);
-        // 添加黑色实心小圆
-        dc.SetPen(*wxBLACK_PEN); // 恢复黑色画笔
-        dc.SetBrush(*wxBLACK_BRUSH); // 恢复黑色画刷
-        dc.DrawCircle(shape.x - 20, shape.y + 10, 3);
-        dc.DrawCircle(shape.x - 20, shape.y - 10, 3);
-        dc.DrawCircle(shape.x + 20, shape.y, 3);
-        break;
-    case ShapeType::OrGate:
-        // 圆的中心点为 shape.x, shape.y，半径为 20
-        dc.DrawCircle(shape.x, shape.y, 20);
-        // 添加黑色实心小圆
-        dc.SetPen(*wxBLACK_PEN); // 恢复黑色画笔
-        dc.SetBrush(*wxBLACK_BRUSH); // 恢复黑色画刷
-        dc.DrawCircle(shape.x - 20, shape.y + 10, 3);
-        dc.DrawCircle(shape.x - 20, shape.y - 10, 3);
-        dc.DrawCircle(shape.x + 20, shape.y, 3);
-        break;
-    case ShapeType::NotGate: {
-        // 等腰直角三角形的顶点为 shape.x, shape.y，斜边竖直，斜边长 40
-        wxPoint points[3] = {
-            wxPoint(shape.x, shape.y),
-            wxPoint(shape.x - 20, shape.y + 20),
-            wxPoint(shape.x - 20, shape.y - 20)
-        };
-        dc.DrawPolygon(3, points);
-        // 添加黑色实心小圆
-        dc.SetPen(*wxBLACK_PEN); // 恢复黑色画笔
-        dc.SetBrush(*wxBLACK_BRUSH); // 恢复黑色画刷
-        dc.DrawCircle(shape.x - 20, shape.y + 10, 3);
-        dc.DrawCircle(shape.x - 20, shape.y - 10, 3);
-        dc.DrawCircle(shape.x, shape.y, 3);
-        break;
-    }
-    case ShapeType::OnPin:
-        // 圆的中心点为 shape.x, shape.y，半径为 10
-        dc.DrawCircle(shape.x, shape.y, 10);
-        // 添加黑色实心小圆
-        dc.SetPen(*wxBLACK_PEN); // 恢复黑色画笔
-        dc.SetBrush(*wxBLACK_BRUSH); // 恢复黑色画刷
-        dc.DrawCircle(shape.x + 10, shape.y, 3);
-        break;
-    case ShapeType::OffPin: {
-        // 正方形的中心点为 shape.x, shape.y，边长为 20
-        dc.DrawRectangle(shape.x - 10, shape.y - 10, 20, 20);
-        // 添加黑色实心小圆
-        dc.SetPen(*wxBLACK_PEN); // 恢复黑色画笔
-        dc.SetBrush(*wxBLACK_BRUSH); // 恢复黑色画刷
-        dc.DrawCircle(shape.x + 10, shape.y, 3);
-        break;
-    }
-    }
+        case ShapeType::OrGate: {
+            // 上侧
+            dc.SetPen(wxPen(wxColour(255, 255, 0))); // 黄色画笔
+            dc.SetBrush(wxBrush(wxColour(255, 255, 0))); // 黄色画刷
+            wxPoint points1[3] = {
+                wxPoint(shape.x - 20, shape.y + 25),
+                wxPoint(shape.x - 5, shape.y),
+                wxPoint(shape.x + 30, shape.y)
+            };
 
-    // 恢复默认的画笔和刷子，如果需要的话
-    dc.SetPen(*wxBLACK_PEN);
-    dc.SetBrush(*wxWHITE_BRUSH);
-}
+            dc.DrawPolygon(3, points1);
+            //下侧
+            wxPoint points2[3] = {
+                wxPoint(shape.x - 20, shape.y - 25),
+                wxPoint(shape.x - 5, shape.y),
+                wxPoint(shape.x + 30, shape.y)
+            };
+            dc.DrawPolygon(3, points2);
+            // 添加黑色实心小圆
+            dc.SetPen(*wxBLACK_PEN); // 恢复黑色画笔
+            dc.SetBrush(*wxBLACK_BRUSH); // 恢复黑色画刷
+            dc.DrawCircle(shape.x - 10, shape.y + 20, 2);
+            dc.DrawCircle(shape.x - 10, shape.y - 20, 2);
+            dc.DrawCircle(shape.x - 10, shape.y + 10, 2);
+            dc.DrawCircle(shape.x - 10, shape.y - 10, 2);
+            dc.DrawCircle(shape.x - 10, shape.y, 2);
+            dc.DrawCircle(shape.x + 30, shape.y, 2);
+            break;
+        }
+
+        case ShapeType::NotGate: {
+            dc.SetPen(wxPen(wxColour(255, 255, 0))); // 黄色画笔
+            dc.SetBrush(wxBrush(wxColour(255, 255, 0))); // 黄色画刷
+            // 等腰直角三角形的顶点为 shape.x, shape.y，斜边竖直，斜边长 40
+            wxPoint points3[3] = {
+                wxPoint(shape.x, shape.y),
+                wxPoint(shape.x - 20, shape.y + 10),
+                wxPoint(shape.x - 20, shape.y - 10)
+            };
+            dc.DrawPolygon(3, points3);
+            dc.DrawCircle(shape.x + 5, shape.y, 5);
+            // 添加黑色实心小圆
+            dc.SetPen(*wxBLACK_PEN); // 恢复黑色画笔
+            dc.SetBrush(*wxBLACK_BRUSH); // 恢复黑色画刷
+            dc.DrawCircle(shape.x - 20, shape.y, 2);
+            dc.DrawCircle(shape.x + 10, shape.y, 2);
+            break;
+        }
+
+        case ShapeType::OnPin: {
+            dc.SetPen(wxPen(wxColour(255, 255, 0))); // 黄色画笔
+            dc.SetBrush(wxBrush(wxColour(255, 255, 0))); // 黄色画刷
+            dc.SetPen(*wxBLUE_PEN); // 恢复蓝色画笔
+            dc.SetBrush(*wxBLUE_BRUSH); // 恢复蓝色画刷
+            // 圆的中心点为 shape.x, shape.y，半径为 10
+            dc.DrawCircle(shape.x, shape.y, 10);
+            // 添加黑色实心小圆
+            dc.SetPen(*wxBLACK_PEN); // 恢复黑色画笔
+            dc.SetBrush(*wxBLACK_BRUSH); // 恢复黑色画刷
+            dc.DrawCircle(shape.x - 10, shape.y, 2);
+            break;
+        }
+
+        case ShapeType::OffPin: {
+            dc.SetPen(wxPen(wxColour(255, 255, 0))); // 黄色画笔
+            dc.SetBrush(wxBrush(wxColour(255, 255, 0))); // 黄色画刷
+            dc.SetPen(*wxRED_PEN); // 恢复红色画笔
+            dc.SetBrush(*wxRED_BRUSH); // 恢复红色画刷
+            // 正方形的中心点为 shape.x, shape.y，边长为 20
+            dc.DrawRectangle(shape.x - 10, shape.y - 10, 20, 20);
+            // 添加黑色实心小圆
+            dc.SetPen(*wxBLACK_PEN); // 恢复黑色画笔
+            dc.SetBrush(*wxBLACK_BRUSH); // 恢复黑色画刷
+            dc.DrawCircle(shape.x + 10, shape.y, 2);
+            break;
+        }
+        }
+
+        // 恢复默认的画笔和刷子，如果需要的话
+        dc.SetPen(*wxBLACK_PEN);
+        dc.SetBrush(*wxWHITE_BRUSH);
+    }
 
     for (const auto& line : lines) {
         dc.DrawLine(line.startX, line.startY, line.endX, line.endY);
@@ -101,8 +137,6 @@ bool DrawingPanel::IsPointOnAnchor(int x, int y) {
     }
     return false;
 }
-
-
 
 // 处理鼠标左键按下事件
 void DrawingPanel::OnLeftDown(wxMouseEvent& event) {
@@ -135,7 +169,6 @@ void DrawingPanel::OnLeftDown(wxMouseEvent& event) {
     currentLine.startX = mouseX; // 记录线的起点
     currentLine.startY = mouseY;
 }
-
 
 // 处理鼠标左键释放事件
 void DrawingPanel::OnLeftUp(wxMouseEvent& event) {
@@ -197,8 +230,6 @@ void DrawingPanel::SnapToPoint(int& x, int& y) {
     y = (y / 10) * 10;
 }
 
-
-
 // 计算最多三条平行于网格边的线段
 std::vector<Line> DrawingPanel::CalculateSegments(int startX, int startY, int endX, int endY) {
     std::vector<Line> segments;
@@ -249,46 +280,44 @@ void DrawingPanel::StartDrag(int index, int x, int y) {
     dragging = true;
 }
 
-
+// 检查点是否在图形内
 bool DrawingPanel::IsPointInShape(int x, int y, const Shape& shape) {
     switch (shape.type) {
-    case ShapeType::AndGate:
+    case ShapeType::AndGate: {
         // 正方形的左上角为 (shape.x, shape.y)，宽高为 40
-        return x >= shape.x - 20 && x <= shape.x + 20 && y >= shape.y -20 && y <= shape.y + 20;
-    case ShapeType::OrGate:
+        return x >= shape.x - 14 && x <= shape.x + 20 && y >= shape.y - 30 && y <= shape.y + 30;
+    }
+
+    case ShapeType::OrGate: {
         // 圆的中心为 (shape.x , shape.y )，半径为 20
-        return (x - shape.x ) * (x - shape.x ) + (y - shape.y ) * (y - shape.y) <= 20 * 20;
+        return x >= shape.x - 5 && x <= shape.x + 25 && y >= shape.y - 20 && y <= shape.y + 20;
+    }
+
     case ShapeType::NotGate: {
-        // 三角形的三个顶点
-        wxPoint p(x, y);
-        wxPoint a(shape.x, shape.y - 20); // 上顶点
-        wxPoint b(shape.x - 20, shape.y + 20); // 左下顶点
-        wxPoint c(shape.x + 20, shape.y + 20); // 右下顶点
-
-        // 判断点是否在三角形内
-        bool inside = false;
-        int A = (b.y - a.y) * (c.x - b.x) + (b.x - a.x) * (c.y - b.y);
-        int B1 = (b.y - p.y) * (c.x - b.x) + (b.x - p.x) * (c.y - b.y);
-        int B2 = (c.y - b.y) * (a.x - c.x) + (c.x - b.x) * (a.y - c.y);
-        int C1 = (p.y - a.y) * (b.x - a.x) + (a.x - p.x) * (b.y - a.y);
-        int C2 = (c.y - a.y) * (p.x - c.x) + (a.x - c.x) * (p.y - c.y);
-
-        if (A >= 0) {
-            if (B1 >= 0 && B2 >= 0 && C1 >= 0 && C2 >= 0) inside = true;
-        }
-        else {
-            if (B1 <= 0 && B2 <= 0 && C1 <= 0 && C2 <= 0) inside = true;
-        }
-        return inside;
+        return x >= shape.x - 15 && x <= shape.x + 5 && y >= shape.y - 10 && y <= shape.y + 10;
     }
-    case ShapeType::OnPin:
-        // 椭圆，半长轴为 5，半短轴为 3.5
-        return (x - shape.x) * (x - shape.x) + (y - shape.y) * (y - shape.y) <= 10 * 10;
+
+    case ShapeType::OnPin: {
+        return x >= shape.x - 5 && x <= shape.x + 10 && y >= shape.y - 10 && y <= shape.y + 10;
+    }
+
     case ShapeType::OffPin: {
-        return x >= shape.x - 10 && x <= shape.x + 10 && y >= shape.y - 10 && y <= shape.y + 10;
+        return x >= shape.x - 10 && x <= shape.x + 5 && y >= shape.y - 10 && y <= shape.y + 10;
     }
+
     default:
         return false;
     }
 }
 
+// 清除所有图形
+void DrawingPanel::Clear() {
+    shapes.clear();
+    lines.clear();
+    Refresh();
+}
+
+// 获取所有图形
+const std::vector<Shape>& DrawingPanel::GetShapes() const {
+    return shapes;
+}

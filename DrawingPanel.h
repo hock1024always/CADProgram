@@ -26,6 +26,8 @@ public:
     void OnLeftUp(wxMouseEvent& event); // 处理鼠标左键释放事件
     void OnMotion(wxMouseEvent& event); // 处理鼠标移动事件
     void AddShape(ShapeType type, int x, int y); // 添加图形到画板
+    void Clear(); // 清除所有图形
+    const std::vector<Shape>& GetShapes() const; // 获取所有图形
 
 private:
     PointGrid pointGrid; // 点状图的对象
