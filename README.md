@@ -4,7 +4,7 @@
 
 **画板**
 
-![](C:\Users\BuBu\Desktop\EDA-Program\picture\drowingpannel.png)
+![](https://github.com/hock1024always/EDA-Program/blob/Prigram/picture/drowingpannel.png)
 
 **侧边框：**
 
