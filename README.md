@@ -1,5 +1,21 @@
 # 项目中期汇报
 
+## 效果展示
+
+**画板**
+
+![](C:\Users\BuBu\Desktop\EDA-Program\picture\drowingpannel.png)
+
+**侧边框：**
+
+![](C:\Users\BuBu\Desktop\EDA-Program\picture\sidebar1.png)
+
+![](C:\Users\BuBu\Desktop\EDA-Program\picture\sidebar2.png)
+
+**属性栏：**
+
+![](C:\Users\BuBu\Desktop\EDA-Program\picture\state.png)
+
 ## 目前实现：
 
 ### 侧边框
