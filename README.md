@@ -8,13 +8,13 @@
 
 **侧边框：**
 
-![](C:\Users\BuBu\Desktop\EDA-Program\picture\sidebar1.png)
+![](https://github.com/hock1024always/EDA-Program/blob/Prigram/picture/sidebar1.png)
 
-![](C:\Users\BuBu\Desktop\EDA-Program\picture\sidebar2.png)
+![](https://github.com/hock1024always/EDA-Program/blob/Prigram/picture/sidebar2.png)
 
 **属性栏：**
 
-![](C:\Users\BuBu\Desktop\EDA-Program\picture\state.png)
+![](https://github.com/hock1024always/EDA-Program/blob/Prigram/picture/state.png)
 
 ## 目前实现：
 
