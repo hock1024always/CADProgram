@@ -1,7 +1,7 @@
 #pragma once
 #ifndef DRAWINGPANEL_H
 #define DRAWINGPANEL_H
-
+//#include <string>
 #include <wx/wx.h>
 #include <vector>
 #include "Shape.h"
@@ -14,7 +14,7 @@
 class DrawingPanel : public wxPanel {
 public:
     DrawingPanel(wxFrame* parent); // 构造函数
-
+    
     void OnPaint(wxPaintEvent& event); // 处理绘图事件
     void OnLeftDown(wxMouseEvent& event); // 处理鼠标左键按下事件
     void OnLeftUp(wxMouseEvent& event); // 处理鼠标左键释放事件
@@ -22,7 +22,8 @@ public:
     void AddShape(ShapeType type, int x, int y); // 添加图形到画板
     void Clear(); // 清除所有图形
     const std::vector<Shape>& GetShapes() const; // 获取所有图形
-
+    
+    //void LoadFromJSON(const std::string& filename);
 private:
     PointGrid pointGrid; // 点状图的对象
     std::vector<Shape> shapes; // 存储所有图形的列表

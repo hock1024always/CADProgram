@@ -10,6 +10,40 @@ struct AnchorPoint {
     AnchorPoint(int x, int y) : x(x), y(y) {}
 };
 
+/*
+struct rectangle {
+    int x;
+    int y;
+    int width;
+    int height;
+};
+
+struct arc {
+    int x1;
+    int y1;
+    int x2;
+    int y2;
+    int xc;
+    int yc;
+};
+
+struct circle{
+    int x;
+    int y;
+    int radius;
+};
+
+struct polygon {
+    int x1;
+    int y1;
+    int x2;
+    int y2;
+    int x3;
+    int y3;
+};
+*/
+
+
 // 定义 ShapeType 枚举类型，表示图形类型
 enum class ShapeType {
     AndGate,

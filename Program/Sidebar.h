@@ -25,11 +25,9 @@ private:
     void OnPrintFile(wxCommandEvent& event);       // 处理打印文件事件
     void OnExit(wxCommandEvent& event);            // 处理退出程序事件
 
-    static ShapeType ShapeTypeFromString(const wxString& str); // 辅助函数：从字符串转换为 ShapeType
-    static wxString ShapeTypeToString(ShapeType type);         // 辅助函数：从 ShapeType 转换为字符串
-
     wxStaticText* infoText; // 用于显示释放的图形信息
     DrawingPanel* drawingPanel; // 指向绘图面板的指针
 };
-
-#endif // SIDEBAR_H
+static ShapeType ShapeTypeFromString(const wxString& str); // 辅助函数：从字符串转换为 ShapeType
+static wxString ShapeTypeToString(ShapeType type);         // 辅助函数：从 ShapeType 转换为字符串
+#endif // SIDEBAR_H·

@@ -1,11 +1,13 @@
 #include "Sidebar.h"
 #include "DrawingPanel.h"
+#include "Shape.h"
 #include <wx/filedlg.h>
 #include <wx/print.h>
 #include <wx/printdlg.h>
 #include <wx/textfile.h>
 #include <wx/tokenzr.h> // 包含 wxStringTokenizer 头文件
-
+#include <string> //字符串
+//using namespace std;
 // 构造函数，初始化工具栏并绑定按钮事件
 Sidebar::Sidebar(wxFrame* parent, DrawingPanel* drawingPanel, int width)
     : wxPanel(parent, wxID_ANY), drawingPanel(drawingPanel) {
@@ -191,7 +193,7 @@ void Sidebar::OnExit(wxCommandEvent& event) {
 }
 
 // 辅助函数：从字符串转换为 ShapeType
-ShapeType Sidebar::ShapeTypeFromString(const wxString& str) {
+ShapeType ShapeTypeFromString(const wxString& str) {
     if (str == "AndGate") return ShapeType::AndGate;
     if (str == "OrGate") return ShapeType::OrGate;
     if (str == "NotGate") return ShapeType::NotGate;
@@ -202,7 +204,7 @@ ShapeType Sidebar::ShapeTypeFromString(const wxString& str) {
 }
 
 // 辅助函数：从 ShapeType 转换为字符串
-wxString Sidebar::ShapeTypeToString(ShapeType type) {
+wxString ShapeTypeToString(ShapeType type) {
     switch (type) {
     case ShapeType::AndGate: return "AndGate";
     case ShapeType::OrGate: return "OrGate";
@@ -212,4 +214,15 @@ wxString Sidebar::ShapeTypeToString(ShapeType type) {
         // 添加其他类型
     default: return "Unknown";
     }
+}
+
+// 添加新的图形
+void DrawingPanel::AddShape(ShapeType type, int x, int y) {
+    // 将新图形添加到图形列表中
+    shapes.push_back({ type, x, y });
+    wxString file = ShapeTypeToString(type);
+    std::string filename = std::string(file.mb_str()) + ".json";
+        //LoadFromJSON(filename);
+        // 刷新面板以更新显示
+        Refresh();
 }

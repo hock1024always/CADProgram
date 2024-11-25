@@ -1,8 +1,9 @@
 #include "DrawingPanel.h"
 #include <cmath>  // 用于计算平方根和平方
 #include <algorithm> // 用于 std::min 和 std::max
-
-
+#include<fstream>
+#include"nlohmann/json.hpp"
+using json = nlohmann::json;
 // 构造函数，初始化绘图面板并创建点状图
 DrawingPanel::DrawingPanel(wxFrame* parent)
     : wxPanel(parent, wxID_ANY), pointGrid(this, 10) { // 设置点的间距为10像素
@@ -19,8 +20,9 @@ void DrawingPanel::OnPaint(wxPaintEvent& event) {
     pointGrid.Draw(dc); // 绘制点状图
 
     for (const auto& shape : shapes) {
+        
         switch (shape.type) {
-        case ShapeType::AndGate:
+        case ShapeType::AndGate: {
             dc.SetPen(wxPen(wxColour(255, 255, 0))); // 黄色画笔
             dc.SetBrush(wxBrush(wxColour(255, 255, 0))); // 黄色画刷
             dc.DrawRectangle(shape.x - 20, shape.y - 30, 20, 60);//门的左侧
@@ -36,6 +38,7 @@ void DrawingPanel::OnPaint(wxPaintEvent& event) {
             dc.DrawCircle(shape.x - 20, shape.y - 20, 2);
             dc.DrawCircle(shape.x - 20, shape.y, 2);
             break;
+        }
 
         case ShapeType::OrGate: {
             // 上侧
@@ -258,16 +261,6 @@ std::vector<Line> DrawingPanel::CalculateSegments(int startX, int startY, int en
     return segments;
 }
 
-// 添加新的图形
-void DrawingPanel::AddShape(ShapeType type, int x, int y) {
-    // 将新图形的坐标对齐到点状网格
-    SnapToPoint(x, y);
-    // 将新图形添加到图形列表中
-    shapes.push_back({ type, x, y });
-    // 刷新面板以更新显示
-    Refresh();
-}
-
 // 开始拖动某个图形
 void DrawingPanel::StartDrag(int index, int x, int y) {
     // 记录当前拖动的图形索引
@@ -320,3 +313,36 @@ void DrawingPanel::Clear() {
 const std::vector<Shape>& DrawingPanel::GetShapes() const {
     return shapes;
 }
+
+/*
+void DrawingPanel::LoadFromJSON(const std::string& filename) {
+    std::ifstream file(filename);
+    if (file.is_open()) {
+            json data;
+            file >> data;
+            file.close();
+            for (const auto& shape : data) {
+                const std::string& type = shape["type"];
+                if (type == "Rectangle") {
+                    //dc.SetPen(wxPen(wxColour(255, 255, 0))); // 黄色画笔
+                    //dc.SetBrush(wxBrush(wxColour(255, 255, 0))); // 黄色画刷
+                    //dc.DrawRectangle(shape["x"], shape["y"],shape["width"],shape["height"]);//门的左侧
+                }
+                if (type == "Arc") {
+                    //dc.SetPen(wxPen(wxColour(255, 255, 0))); // 黄色画笔
+                    //dc.SetBrush(wxBrush(wxColour(255, 255, 0))); // 黄色画刷
+                    //dc.DrawArc(shape["x1"], shape["y1"],shape["x2"],shape["y2"],shape["xc"], shape["yc"]);//门的右侧
+                }
+                if (type == "Circle"){
+                    //dc.SetPen(*wxBLACK_PEN); // 恢复黑色画笔
+                    //dc.SetBrush(*wxBLACK_BRUSH); // 恢复黑色画刷
+                    // 添加黑色实心小圆
+                    //dc.DrawCircle(shape["x"], shape["y"], shape["radius"]);
+                }
+            }
+        }else {
+            wxMessageBox("Failed to open file", "Error", wxICON_ERROR);
+        }
+    }
+*/
+
