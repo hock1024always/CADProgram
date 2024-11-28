@@ -192,37 +192,3 @@ void Sidebar::OnExit(wxCommandEvent& event) {
     Close(true); // 退出程序
 }
 
-// 辅助函数：从字符串转换为 ShapeType
-ShapeType ShapeTypeFromString(const wxString& str) {
-    if (str == "AndGate") return ShapeType::AndGate;
-    if (str == "OrGate") return ShapeType::OrGate;
-    if (str == "NotGate") return ShapeType::NotGate;
-    if (str == "OnPin") return ShapeType::OnPin;
-    if (str == "OffPin") return ShapeType::OffPin;
-    // 添加其他类型
-    return ShapeType::Unknown;
-}
-
-// 辅助函数：从 ShapeType 转换为字符串
-wxString ShapeTypeToString(ShapeType type) {
-    switch (type) {
-    case ShapeType::AndGate: return "AndGate";
-    case ShapeType::OrGate: return "OrGate";
-    case ShapeType::NotGate: return "NotGate";
-    case ShapeType::OnPin: return "OnPin";
-    case ShapeType::OffPin: return "OffPin";
-        // 添加其他类型
-    default: return "Unknown";
-    }
-}
-
-// 添加新的图形
-void DrawingPanel::AddShape(ShapeType type, int x, int y) {
-    // 将新图形添加到图形列表中
-    shapes.push_back({ type, x, y });
-    wxString file = ShapeTypeToString(type);
-    std::string filename = std::string(file.mb_str()) + ".json";
-        //LoadFromJSON(filename);
-        // 刷新面板以更新显示
-        Refresh();
-}

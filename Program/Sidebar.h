@@ -28,6 +28,5 @@ private:
     wxStaticText* infoText; // 用于显示释放的图形信息
     DrawingPanel* drawingPanel; // 指向绘图面板的指针
 };
-static ShapeType ShapeTypeFromString(const wxString& str); // 辅助函数：从字符串转换为 ShapeType
-static wxString ShapeTypeToString(ShapeType type);         // 辅助函数：从 ShapeType 转换为字符串
+
 #endif // SIDEBAR_H·

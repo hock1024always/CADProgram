@@ -2,6 +2,8 @@
 #ifndef SHAPE_H
 #define SHAPE_H
 
+#include"nlohmann/json.hpp"
+using json = nlohmann::json;
 // 定义锚点结构
 struct AnchorPoint {
     int x;
@@ -9,39 +11,6 @@ struct AnchorPoint {
 
     AnchorPoint(int x, int y) : x(x), y(y) {}
 };
-
-/*
-struct rectangle {
-    int x;
-    int y;
-    int width;
-    int height;
-};
-
-struct arc {
-    int x1;
-    int y1;
-    int x2;
-    int y2;
-    int xc;
-    int yc;
-};
-
-struct circle{
-    int x;
-    int y;
-    int radius;
-};
-
-struct polygon {
-    int x1;
-    int y1;
-    int x2;
-    int y2;
-    int x3;
-    int y3;
-};
-*/
 
 
 // 定义 ShapeType 枚举类型，表示图形类型
@@ -56,6 +25,7 @@ enum class ShapeType {
 
 // 定义 Shape 结构体，表示图形的位置和类型
 struct Shape {
+    json data;
     ShapeType type; // 图形的类型
     int x, y;       // 图形的位置坐标
     std::vector<AnchorPoint> getanchorPoints() {

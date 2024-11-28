@@ -20,102 +20,43 @@ void DrawingPanel::OnPaint(wxPaintEvent& event) {
     pointGrid.Draw(dc); // 绘制点状图
 
     for (const auto& shape : shapes) {
-        
-        switch (shape.type) {
-        case ShapeType::AndGate: {
-            dc.SetPen(wxPen(wxColour(255, 255, 0))); // 黄色画笔
-            dc.SetBrush(wxBrush(wxColour(255, 255, 0))); // 黄色画刷
-            dc.DrawRectangle(shape.x - 20, shape.y - 30, 20, 60);//门的左侧
-            dc.DrawArc(shape.x, shape.y + 30, shape.x, shape.y - 30, shape.x, shape.y);//门的右侧
-            dc.FloodFill(shape.x, shape.y, *wxYELLOW, wxFLOOD_SURFACE);//洪水填充 
-            // 添加黑色实心小圆
-            dc.SetPen(*wxBLACK_PEN); // 恢复黑色画笔
-            dc.SetBrush(*wxBLACK_BRUSH); // 恢复黑色画刷
-            dc.DrawCircle(shape.x - 20, shape.y + 10, 2);
-            dc.DrawCircle(shape.x - 20, shape.y - 10, 2);
-            dc.DrawCircle(shape.x + 30, shape.y, 2);
-            dc.DrawCircle(shape.x - 20, shape.y + 20, 2);
-            dc.DrawCircle(shape.x - 20, shape.y - 20, 2);
-            dc.DrawCircle(shape.x - 20, shape.y, 2);
-            break;
-        }
+        for (const auto& data : shape.data) {
+            const std::string& color = data["color"];
+            if (color == "yellow") {
+                dc.SetPen(wxPen(wxColour(255, 255, 0))); // 黄色画笔
+                dc.SetBrush(wxBrush(wxColour(255, 255, 0))); // 黄色画刷
+            }
+            if (color == "black") {
+                dc.SetPen(*wxBLACK_PEN); // 恢复黑色画笔
+                dc.SetBrush(*wxBLACK_BRUSH); // 恢复黑色画刷
+            }
+            if (color == "red") {
+                dc.SetPen(*wxRED_PEN); // 恢复红色画笔
+                dc.SetBrush(*wxRED_BRUSH); // 恢复红色画刷
+            }
+            if (color == "blue") {
+                dc.SetPen(*wxBLUE_PEN); // 恢复蓝色画笔
+                dc.SetBrush(*wxBLUE_BRUSH); // 恢复蓝色画刷
+            }
 
-        case ShapeType::OrGate: {
-            // 上侧
-            dc.SetPen(wxPen(wxColour(255, 255, 0))); // 黄色画笔
-            dc.SetBrush(wxBrush(wxColour(255, 255, 0))); // 黄色画刷
-            wxPoint points1[3] = {
-                wxPoint(shape.x - 20, shape.y + 25),
-                wxPoint(shape.x - 5, shape.y),
-                wxPoint(shape.x + 30, shape.y)
-            };
-
-            dc.DrawPolygon(3, points1);
-            //下侧
-            wxPoint points2[3] = {
-                wxPoint(shape.x - 20, shape.y - 25),
-                wxPoint(shape.x - 5, shape.y),
-                wxPoint(shape.x + 30, shape.y)
-            };
-            dc.DrawPolygon(3, points2);
-            // 添加黑色实心小圆
-            dc.SetPen(*wxBLACK_PEN); // 恢复黑色画笔
-            dc.SetBrush(*wxBLACK_BRUSH); // 恢复黑色画刷
-            dc.DrawCircle(shape.x - 10, shape.y + 20, 2);
-            dc.DrawCircle(shape.x - 10, shape.y - 20, 2);
-            dc.DrawCircle(shape.x - 10, shape.y + 10, 2);
-            dc.DrawCircle(shape.x - 10, shape.y - 10, 2);
-            dc.DrawCircle(shape.x - 10, shape.y, 2);
-            dc.DrawCircle(shape.x + 30, shape.y, 2);
-            break;
-        }
-
-        case ShapeType::NotGate: {
-            dc.SetPen(wxPen(wxColour(255, 255, 0))); // 黄色画笔
-            dc.SetBrush(wxBrush(wxColour(255, 255, 0))); // 黄色画刷
-            // 等腰直角三角形的顶点为 shape.x, shape.y，斜边竖直，斜边长 40
-            wxPoint points3[3] = {
-                wxPoint(shape.x, shape.y),
-                wxPoint(shape.x - 20, shape.y + 10),
-                wxPoint(shape.x - 20, shape.y - 10)
-            };
-            dc.DrawPolygon(3, points3);
-            dc.DrawCircle(shape.x + 5, shape.y, 5);
-            // 添加黑色实心小圆
-            dc.SetPen(*wxBLACK_PEN); // 恢复黑色画笔
-            dc.SetBrush(*wxBLACK_BRUSH); // 恢复黑色画刷
-            dc.DrawCircle(shape.x - 20, shape.y, 2);
-            dc.DrawCircle(shape.x + 10, shape.y, 2);
-            break;
-        }
-
-        case ShapeType::OnPin: {
-            dc.SetPen(wxPen(wxColour(255, 255, 0))); // 黄色画笔
-            dc.SetBrush(wxBrush(wxColour(255, 255, 0))); // 黄色画刷
-            dc.SetPen(*wxBLUE_PEN); // 恢复蓝色画笔
-            dc.SetBrush(*wxBLUE_BRUSH); // 恢复蓝色画刷
-            // 圆的中心点为 shape.x, shape.y，半径为 10
-            dc.DrawCircle(shape.x, shape.y, 10);
-            // 添加黑色实心小圆
-            dc.SetPen(*wxBLACK_PEN); // 恢复黑色画笔
-            dc.SetBrush(*wxBLACK_BRUSH); // 恢复黑色画刷
-            dc.DrawCircle(shape.x - 10, shape.y, 2);
-            break;
-        }
-
-        case ShapeType::OffPin: {
-            dc.SetPen(wxPen(wxColour(255, 255, 0))); // 黄色画笔
-            dc.SetBrush(wxBrush(wxColour(255, 255, 0))); // 黄色画刷
-            dc.SetPen(*wxRED_PEN); // 恢复红色画笔
-            dc.SetBrush(*wxRED_BRUSH); // 恢复红色画刷
-            // 正方形的中心点为 shape.x, shape.y，边长为 20
-            dc.DrawRectangle(shape.x - 10, shape.y - 10, 20, 20);
-            // 添加黑色实心小圆
-            dc.SetPen(*wxBLACK_PEN); // 恢复黑色画笔
-            dc.SetBrush(*wxBLACK_BRUSH); // 恢复黑色画刷
-            dc.DrawCircle(shape.x + 10, shape.y, 2);
-            break;
-        }
+            const std::string& type = data["type"];
+            if (type == "Rectangle") {
+                dc.DrawRectangle(data["x"] + shape.x, data["y"] + shape.y, data["width"], data["height"]);//门的左侧
+            }
+            if (type == "Arc") {
+                dc.DrawArc(data["x1"] + shape.x, data["y1"] + shape.y, data["x2"] + shape.x, data["y2"] + shape.y, data["xc"] + shape.x, data["yc"] + shape.y);//门的右侧
+            }
+            if (type == "Circle") {
+                dc.DrawCircle(data["x"] + shape.x, data["y"] + shape.y, data["radius"]);
+            }
+            if (type == "Polygon") {
+                wxPoint points1[3] = {
+                    wxPoint(shape.x + data["x1"], shape.y + data["y1"]),
+                    wxPoint(shape.x + data["x2"], shape.y + data["y2"]),
+                    wxPoint(shape.x + data["x3"], shape.y + data["y3"])
+                };
+                dc.DrawPolygon(3, points1);
+            }
         }
 
         // 恢复默认的画笔和刷子，如果需要的话
@@ -314,35 +255,49 @@ const std::vector<Shape>& DrawingPanel::GetShapes() const {
     return shapes;
 }
 
-/*
-void DrawingPanel::LoadFromJSON(const std::string& filename) {
+json LoadFromJSON(const std::string& filename) {
     std::ifstream file(filename);
     if (file.is_open()) {
-            json data;
-            file >> data;
-            file.close();
-            for (const auto& shape : data) {
-                const std::string& type = shape["type"];
-                if (type == "Rectangle") {
-                    //dc.SetPen(wxPen(wxColour(255, 255, 0))); // 黄色画笔
-                    //dc.SetBrush(wxBrush(wxColour(255, 255, 0))); // 黄色画刷
-                    //dc.DrawRectangle(shape["x"], shape["y"],shape["width"],shape["height"]);//门的左侧
-                }
-                if (type == "Arc") {
-                    //dc.SetPen(wxPen(wxColour(255, 255, 0))); // 黄色画笔
-                    //dc.SetBrush(wxBrush(wxColour(255, 255, 0))); // 黄色画刷
-                    //dc.DrawArc(shape["x1"], shape["y1"],shape["x2"],shape["y2"],shape["xc"], shape["yc"]);//门的右侧
-                }
-                if (type == "Circle"){
-                    //dc.SetPen(*wxBLACK_PEN); // 恢复黑色画笔
-                    //dc.SetBrush(*wxBLACK_BRUSH); // 恢复黑色画刷
-                    // 添加黑色实心小圆
-                    //dc.DrawCircle(shape["x"], shape["y"], shape["radius"]);
-                }
-            }
-        }else {
-            wxMessageBox("Failed to open file", "Error", wxICON_ERROR);
-        }
+        json data;
+        file >> data;
+        file.close();
+        return data;
+    } else {
+        wxMessageBox("Failed to open file", "Error", wxICON_ERROR);
     }
-*/
+}
 
+// 添加新的图形
+void DrawingPanel::AddShape(ShapeType type, int x, int y) {
+    // 将新图形添加到图形列表中
+    wxString file = ShapeTypeToString(type);
+    std::string filename = "json/" + std::string(file.mb_str()) + ".json";
+    json data = LoadFromJSON(filename);
+    shapes.push_back({ data,type, x, y });
+    // 刷新面板以更新显示
+    Refresh();
+}
+
+// 辅助函数：从字符串转换为 ShapeType
+ShapeType ShapeTypeFromString(const wxString& str) {
+    if (str == "AndGate") return ShapeType::AndGate;
+    if (str == "OrGate") return ShapeType::OrGate;
+    if (str == "NotGate") return ShapeType::NotGate;
+    if (str == "OnPin") return ShapeType::OnPin;
+    if (str == "OffPin") return ShapeType::OffPin;
+    // 添加其他类型
+    return ShapeType::Unknown;
+}
+
+// 辅助函数：从 ShapeType 转换为字符串
+wxString ShapeTypeToString(ShapeType type) {
+    switch (type) {
+    case ShapeType::AndGate: return "AndGate";
+    case ShapeType::OrGate: return "OrGate";
+    case ShapeType::NotGate: return "NotGate";
+    case ShapeType::OnPin: return "OnPin";
+    case ShapeType::OffPin: return "OffPin";
+        // 添加其他类型
+    default: return "Unknown";
+    }
+}
