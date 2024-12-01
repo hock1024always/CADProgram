@@ -4,3 +4,9 @@
 改动文件有：sidebar.h,
 
 sidebar.cpp.
+
+24_12_1
+
+增加了文件的回退，前进功能，放在编辑菜单下面
+
+改动文件有sidebar.h,sideabr.cpp,drawingpanel.h,drawingpanel.cpp

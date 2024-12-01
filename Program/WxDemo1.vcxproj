@@ -144,9 +144,18 @@
   <ItemGroup>
     <ClInclude Include="DrawingPanel.h" />
     <ClInclude Include="MainFrame.h" />
+    <ClInclude Include="nlohmann\json.hpp" />
+    <ClInclude Include="nlohmann\json_fwd.hpp" />
     <ClInclude Include="PointGrid.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="Sidebar.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AndGate.json" />
+    <None Include="NotGate.json" />
+    <None Include="OffPin.json" />
+    <None Include="OnPin.json" />
+    <None Include="OrGate.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

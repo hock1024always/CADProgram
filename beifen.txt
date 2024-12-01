@@ -5,62 +5,62 @@
 #include <wx/print.h>
 #include <wx/printdlg.h>
 #include <wx/textfile.h>
-#include <wx/tokenzr.h> // °üº¬ wxStringTokenizer Í·ÎÄ¼ş
-#include <string> //×Ö·û´®
+#include <wx/tokenzr.h> // åŒ…å« wxStringTokenizer å¤´æ–‡ä»¶
+#include <string> //å­—ç¬¦ä¸²
 //using namespace std;
-// ¹¹Ôìº¯Êı£¬³õÊ¼»¯¹¤¾ßÀ¸²¢°ó¶¨°´Å¥ÊÂ¼ş
+// æ„é€ å‡½æ•°ï¼Œåˆå§‹åŒ–å·¥å…·æ å¹¶ç»‘å®šæŒ‰é’®äº‹ä»¶
 Sidebar::Sidebar(wxFrame* parent, DrawingPanel* drawingPanel, int width)
     : wxPanel(parent, wxID_ANY), drawingPanel(drawingPanel) {
-    SetMinSize(wxSize(width, -1)); // ÉèÖÃ×îĞ¡¿í¶È
+    SetMinSize(wxSize(width, -1)); // è®¾ç½®æœ€å°å®½åº¦
 
-    // ´´½¨²Ëµ¥À¸
+    // åˆ›å»ºèœå•æ 
     wxMenuBar* menuBar = new wxMenuBar();
 
-    // ´´½¨ÎÄ¼ş²Ëµ¥
+    // åˆ›å»ºæ–‡ä»¶èœå•
     wxMenu* fileMenu = new wxMenu();
-    fileMenu->Append(wxID_NEW, "&ĞÂ½¨ÎÄ¼ş\tCtrl+N");
-    fileMenu->Append(wxID_OPEN, "&´ò¿ªÎÄ¼ş\tCtrl+O");
-    fileMenu->Append(wxID_SAVE, "&±£´æÎÄ¼ş\tCtrl+S");
-    fileMenu->Append(wxID_SAVEAS, "&Áí´æÎªÎÄ¼ş\tCtrl+Shift+S");
-    fileMenu->Append(wxID_CLOSE, "&¹Ø±ÕÎÄ¼ş\tCtrl+W");
-    fileMenu->Append(wxID_PRINT, "&´òÓ¡ÎÄ¼ş\tCtrl+P");
+    fileMenu->Append(wxID_NEW, "&æ–°å»ºæ–‡ä»¶\tCtrl+N");
+    fileMenu->Append(wxID_OPEN, "&æ‰“å¼€æ–‡ä»¶\tCtrl+O");
+    fileMenu->Append(wxID_SAVE, "&ä¿å­˜æ–‡ä»¶\tCtrl+S");
+    fileMenu->Append(wxID_SAVEAS, "&å¦å­˜ä¸ºæ–‡ä»¶\tCtrl+Shift+S");
+    fileMenu->Append(wxID_CLOSE, "&å…³é—­æ–‡ä»¶\tCtrl+W");
+    fileMenu->Append(wxID_PRINT, "&æ‰“å°æ–‡ä»¶\tCtrl+P");
 
 
-    // ½«ÎÄ¼ş²Ëµ¥Ìí¼Óµ½²Ëµ¥À¸
-    menuBar->Append(fileMenu, "&ÎÄ¼ş");
+    // å°†æ–‡ä»¶èœå•æ·»åŠ åˆ°èœå•æ 
+    menuBar->Append(fileMenu, "&æ–‡ä»¶");
 
-    // ´´½¨°ïÖú²Ëµ¥
+    // åˆ›å»ºå¸®åŠ©èœå•
     wxMenu* helpMenu = new wxMenu();
-    helpMenu->Append(wxID_ABOUT, "&¹ØÓÚ\tF1");
+    helpMenu->Append(wxID_ABOUT, "&å…³äº\tF1");
 
-    // ½«°ïÖú²Ëµ¥Ìí¼Óµ½²Ëµ¥À¸
-    menuBar->Append(helpMenu, "&°ïÖú");
-    //´´½¨´°¿Ú²Ëµ¥
+    // å°†å¸®åŠ©èœå•æ·»åŠ åˆ°èœå•æ 
+    menuBar->Append(helpMenu, "&å¸®åŠ©");
+    //åˆ›å»ºçª—å£èœå•
     wxMenu* editMenu = new wxMenu();
-    editMenu->Append(wxID_UNDO, "&»ØÍË");
-    editMenu->Append(wxID_REDO, "&Ç°½ø");
-    menuBar->Append(editMenu, "&±à¼­");
+    editMenu->Append(wxID_UNDO, "&å›é€€");
+    editMenu->Append(wxID_REDO, "&å‰è¿›");
+    menuBar->Append(editMenu, "&ç¼–è¾‘");
 
 
-    // ½«²Ëµ¥À¸ÉèÖÃµ½¸¸´°¿Ú
+    // å°†èœå•æ è®¾ç½®åˆ°çˆ¶çª—å£
     parent->SetMenuBar(menuBar);
 
     wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
 
-    wxButton* undoButton = new wxButton(this, wxID_UNDO, "»ØÍË");
-    wxButton* redoButton = new wxButton(this, wxID_REDO, "Ç°½ø");
-    wxButton* rectButton = new wxButton(this, wxID_ANY, "ÓëÃÅ"); // Rectangle
-    wxButton* circleButton = new wxButton(this, wxID_ANY, "»òÃÅ"); // Circle
-    wxButton* triangleButton = new wxButton(this, wxID_ANY, "·ÇÃÅ"); // Triangle
-    wxButton* ellipseButton = new wxButton(this, wxID_ANY, "1ĞÅºÅÊäÈë"); // Ellipse
-    wxButton* diamondButton = new wxButton(this, wxID_ANY, "0ĞÅºÅÊäÈë"); // Diamond
+    wxButton* undoButton = new wxButton(this, wxID_UNDO, "å›é€€");
+    wxButton* redoButton = new wxButton(this, wxID_REDO, "å‰è¿›");
+    wxButton* rectButton = new wxButton(this, wxID_ANY, "ä¸é—¨"); // Rectangle
+    wxButton* circleButton = new wxButton(this, wxID_ANY, "æˆ–é—¨"); // Circle
+    wxButton* triangleButton = new wxButton(this, wxID_ANY, "éé—¨"); // Triangle
+    wxButton* ellipseButton = new wxButton(this, wxID_ANY, "1ä¿¡å·è¾“å…¥"); // Ellipse
+    wxButton* diamondButton = new wxButton(this, wxID_ANY, "0ä¿¡å·è¾“å…¥"); // Diamond
 
-    // ´´½¨¾²Ì¬ÎÄ±¾£¬ÓÃÓÚÏÔÊ¾Í¼ĞÎÊÍ·ÅĞÅÏ¢
+    // åˆ›å»ºé™æ€æ–‡æœ¬ï¼Œç”¨äºæ˜¾ç¤ºå›¾å½¢é‡Šæ”¾ä¿¡æ¯
     infoGrid = new wxGrid(this, wxID_ANY);
-    infoGrid->CreateGrid(5, 2); // ´´½¨5ĞĞ2ÁĞµÄ±í¸ñ
-    infoGrid->SetColLabelValue(0, "ÊôĞÔ");
-    infoGrid->SetColLabelValue(1, "Öµ");
-    infoGrid->SetRowLabelSize(0); // Òş²ØĞĞ±êÇ©
+    infoGrid->CreateGrid(5, 2); // åˆ›å»º5è¡Œ2åˆ—çš„è¡¨æ ¼
+    infoGrid->SetColLabelValue(0, "å±æ€§");
+    infoGrid->SetColLabelValue(1, "å€¼");
+    infoGrid->SetRowLabelSize(0); // éšè—è¡Œæ ‡ç­¾
 
     sizer->Add(undoButton, 0, wxALL, 5);
     sizer->Add(redoButton, 0, wxALL, 5);
@@ -81,7 +81,7 @@ Sidebar::Sidebar(wxFrame* parent, DrawingPanel* drawingPanel, int width)
     diamondButton->Bind(wxEVT_BUTTON, &Sidebar::OnDiamondButton, this);
 
 
-    // °ó¶¨²Ëµ¥ÏîÊÂ¼ş
+    // ç»‘å®šèœå•é¡¹äº‹ä»¶
     parent->Bind(wxEVT_MENU, &Sidebar::OnNewFile, this, wxID_NEW);
     parent->Bind(wxEVT_MENU, &Sidebar::OnOpenFile, this, wxID_OPEN);
     parent->Bind(wxEVT_MENU, &Sidebar::OnSaveFile, this, wxID_SAVE);
@@ -107,55 +107,55 @@ void Sidebar::UpdateInfo(const wxString& info) {
 
 void Sidebar::OnRectButton(wxCommandEvent& event) {
     drawingPanel->AddShape(ShapeType::AndGate, 50, 50);
-    wxString info = "Ãû³Æ: ÓëÃÅ\n½ÓÈë¿ÚÊı: 2\nÊä³ö¿ÚÊı: 1\n¹¦ÄÜ: Ë«Õæ³öÕæ";
+    wxString info = "åç§°: ä¸é—¨\næ¥å…¥å£æ•°: 2\nè¾“å‡ºå£æ•°: 1\nåŠŸèƒ½: åŒçœŸå‡ºçœŸ";
     UpdateInfo(info);
 }
 
 void Sidebar::OnCircleButton(wxCommandEvent& event) {
     drawingPanel->AddShape(ShapeType::OrGate, 150, 100);
-    wxString info = "Ãû³Æ: »òÃÅ\n½ÓÈë¿ÚÊı: 2\nÊä³ö¿ÚÊı: 1\n¹¦ÄÜ: ÓĞÕæ³öÕæ";
+    wxString info = "åç§°: æˆ–é—¨\næ¥å…¥å£æ•°: 2\nè¾“å‡ºå£æ•°: 1\nåŠŸèƒ½: æœ‰çœŸå‡ºçœŸ";
     UpdateInfo(info);
 }
 
 void Sidebar::OnTriangleButton(wxCommandEvent& event) {
     drawingPanel->AddShape(ShapeType::NotGate, 50, 100);
-    wxString info = "Ãû³Æ: ·ÇÃÅ\n½ÓÈë¿ÚÊı: 2\nÊä³ö¿ÚÊı: 1\n¹¦ÄÜ: Ë«¼Ù³öÕæ";
+    wxString info = "åç§°: éé—¨\næ¥å…¥å£æ•°: 2\nè¾“å‡ºå£æ•°: 1\nåŠŸèƒ½: åŒå‡å‡ºçœŸ";
     UpdateInfo(info);
 }
 
 void Sidebar::OnEllipseButton(wxCommandEvent& event) {
     drawingPanel->AddShape(ShapeType::OnPin, 150, 150);
-    wxString info = "Ãû³Æ: 1ÊäÈëÉè±¸\n½ÓÈë¿ÚÊı: 0\nÊä³ö¿ÚÊı: 1\n¹¦ÄÜ: Êä³ö1";
+    wxString info = "åç§°: 1è¾“å…¥è®¾å¤‡\næ¥å…¥å£æ•°: 0\nè¾“å‡ºå£æ•°: 1\nåŠŸèƒ½: è¾“å‡º1";
     UpdateInfo(info);
 }
 
 void Sidebar::OnDiamondButton(wxCommandEvent& event) {
     drawingPanel->AddShape(ShapeType::OffPin, 100, 150);
-    wxString info = "Ãû³Æ: 0ÊäÈëÉè±¸\n½ÓÈë¿ÚÊı: 0\nÊä³ö¿ÚÊı: 1\n¹¦ÄÜ: Êä³ö0";
+    wxString info = "åç§°: 0è¾“å…¥è®¾å¤‡\næ¥å…¥å£æ•°: 0\nè¾“å‡ºå£æ•°: 1\nåŠŸèƒ½: è¾“å‡º0";
     UpdateInfo(info);
 }
 
-// ²Ëµ¥ÏîÊÂ¼ş´¦Àíº¯Êı
+// èœå•é¡¹äº‹ä»¶å¤„ç†å‡½æ•°
 void Sidebar::OnNewFile(wxCommandEvent& event) {
-    // ĞÂ½¨ÎÄ¼şµÄÂß¼­
-    drawingPanel->Clear(); // ¼ÙÉè DrawingPanel ÀàÓĞÒ»¸ö Clear ·½·¨
-    wxMessageBox("ĞÂ½¨ÎÄ¼şÒÑ´´½¨", "ÌáÊ¾", wxOK | wxICON_INFORMATION);
+    // æ–°å»ºæ–‡ä»¶çš„é€»è¾‘
+    drawingPanel->Clear(); // å‡è®¾ DrawingPanel ç±»æœ‰ä¸€ä¸ª Clear æ–¹æ³•
+    wxMessageBox("æ–°å»ºæ–‡ä»¶å·²åˆ›å»º", "æç¤º", wxOK | wxICON_INFORMATION);
 }
 
 void Sidebar::OnOpenFile(wxCommandEvent& event) {
-    wxFileDialog openFileDialog(this, _("´ò¿ªÎÄ¼ş"), "", "",
+    wxFileDialog openFileDialog(this, _("æ‰“å¼€æ–‡ä»¶"), "", "",
         "All files (*.*)|*.*", wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 
     if (openFileDialog.ShowModal() == wxID_CANCEL)
-        return; // ÓÃ»§È¡Ïû
+        return; // ç”¨æˆ·å–æ¶ˆ
 
-    // ´ò¿ªÎÄ¼şµÄÂß¼­
+    // æ‰“å¼€æ–‡ä»¶çš„é€»è¾‘
     wxTextFile file;
     if (file.Open(openFileDialog.GetPath())) {
         drawingPanel->Clear();
         for (wxString str = file.GetFirstLine(); !file.Eof(); str = file.GetNextLine()) {
-            // ¼ÙÉèÃ¿ĞĞ°üº¬ĞÎ×´ÀàĞÍºÍÎ»ÖÃ
-            // ÀıÈç£ºAndGate 50 50
+            // å‡è®¾æ¯è¡ŒåŒ…å«å½¢çŠ¶ç±»å‹å’Œä½ç½®
+            // ä¾‹å¦‚ï¼šAndGate 50 50
             wxStringTokenizer tokenizer(str, " ");
             wxString shapeType = tokenizer.GetNextToken();
             long x, y;
@@ -167,12 +167,12 @@ void Sidebar::OnOpenFile(wxCommandEvent& event) {
 }
 
 void Sidebar::OnSaveFile(wxCommandEvent& event) {
-    // ±£´æÎÄ¼şµÄÂß¼­
-    wxFileDialog saveFileDialog(this, _("±£´æÎÄ¼ş"), "", "",
+    // ä¿å­˜æ–‡ä»¶çš„é€»è¾‘
+    wxFileDialog saveFileDialog(this, _("ä¿å­˜æ–‡ä»¶"), "", "",
         "All files (*.*)|*.*", wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 
     if (saveFileDialog.ShowModal() == wxID_CANCEL)
-        return; // ÓÃ»§È¡Ïû
+        return; // ç”¨æˆ·å–æ¶ˆ
 
     wxTextFile file;
     if (file.Create(saveFileDialog.GetPath())) {
@@ -186,11 +186,11 @@ void Sidebar::OnSaveFile(wxCommandEvent& event) {
 }
 
 void Sidebar::OnSaveAsFile(wxCommandEvent& event) {
-    wxFileDialog saveFileDialog(this, _("Áí´æÎªÎÄ¼ş"), "", "",
+    wxFileDialog saveFileDialog(this, _("å¦å­˜ä¸ºæ–‡ä»¶"), "", "",
         "All files (*.*)|*.*", wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 
     if (saveFileDialog.ShowModal() == wxID_CANCEL)
-        return; // ÓÃ»§È¡Ïû
+        return; // ç”¨æˆ·å–æ¶ˆ
 
     wxTextFile file;
     if (file.Create(saveFileDialog.GetPath())) {
@@ -204,9 +204,9 @@ void Sidebar::OnSaveAsFile(wxCommandEvent& event) {
 }
 
 void Sidebar::OnCloseFile(wxCommandEvent& event) {
-    // ¹Ø±ÕÎÄ¼şµÄÂß¼­
+    // å…³é—­æ–‡ä»¶çš„é€»è¾‘
     drawingPanel->Clear();
-    wxMessageBox("ÎÄ¼şÒÑ¹Ø±Õ", "ÌáÊ¾", wxOK | wxICON_INFORMATION);
+    wxMessageBox("æ–‡ä»¶å·²å…³é—­", "æç¤º", wxOK | wxICON_INFORMATION);
 }
 
 void Sidebar::OnPrintFile(wxCommandEvent& event) {
@@ -215,8 +215,8 @@ void Sidebar::OnPrintFile(wxCommandEvent& event) {
     wxPrintDialog printDialog(this, &printDialogData);
 
     if (printDialog.ShowModal() == wxID_OK) {
-        // ´òÓ¡ÎÄ¼şµÄÂß¼­
-        wxMessageBox("´òÓ¡ÎÄ¼ş¹¦ÄÜÉĞÎ´ÊµÏÖ", "ÌáÊ¾", wxOK | wxICON_INFORMATION);
+        // æ‰“å°æ–‡ä»¶çš„é€»è¾‘
+        wxMessageBox("æ‰“å°æ–‡ä»¶åŠŸèƒ½å°šæœªå®ç°", "æç¤º", wxOK | wxICON_INFORMATION);
     }
 }
 

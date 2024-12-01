@@ -47,5 +47,20 @@
     <ClInclude Include="PointGrid.h">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="nlohmann\json.hpp">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\json_fwd.hpp">
+      <Filter>源文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AndGate.json">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="NotGate.json" />
+    <None Include="OffPin.json" />
+    <None Include="OnPin.json" />
+    <None Include="OrGate.json" />
   </ItemGroup>
 </Project>
