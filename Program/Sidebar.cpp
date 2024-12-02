@@ -78,28 +78,28 @@ Sidebar::Sidebar(wxFrame* parent, DrawingPanel* drawingPanel, int width)
 }
 
 void Sidebar::OnRectButton(wxCommandEvent& event) {
-    drawingPanel->AddShape(ShapeType::AndGate, 50, 50);
+    drawingPanel->AddShape(ShapeType::AndGate, 75, 75);
     wxString info = "名称: 与门\n接入口数: 2\n输出口数: 1\n功能: 双真出真";
     infoText->SetLabel(info);
 }
 
 void Sidebar::OnCircleButton(wxCommandEvent& event) {
-    drawingPanel->AddShape(ShapeType::OrGate, 150, 100);
+    drawingPanel->AddShape(ShapeType::OrGate, 225, 150);
     infoText->SetLabel("名称: 或门\n接入口数: 2\n输出口数: 1\n功能: 有真出真");
 }
 
 void Sidebar::OnTriangleButton(wxCommandEvent& event) {
-    drawingPanel->AddShape(ShapeType::NotGate, 50, 100);
+    drawingPanel->AddShape(ShapeType::NotGate, 75, 150);
     infoText->SetLabel("名称: 非门\n接入口数: 2\n输出口数: 1\n功能: 双假出真");
 }
 
 void Sidebar::OnEllipseButton(wxCommandEvent& event) {
-    drawingPanel->AddShape(ShapeType::OnPin, 150, 150);
+    drawingPanel->AddShape(ShapeType::OnPin, 225, 375);
     infoText->SetLabel("名称: 1输入设备\n接入口数: 0\n输出口数: 1\n功能: 输出1");
 }
 
 void Sidebar::OnDiamondButton(wxCommandEvent& event) {
-    drawingPanel->AddShape(ShapeType::OffPin, 100, 150);
+    drawingPanel->AddShape(ShapeType::OffPin, 150, 225);
     infoText->SetLabel("名称: 0输入设备\n接入口数: 0\n输出口数: 1\n功能: 输出0");
 }
 

@@ -34,7 +34,7 @@ private:
     int dragOffsetX = 0, dragOffsetY = 0; // 拖动图形的偏移量
 
     // 新增常量：锚点的判断域半径
-    const int anchorRadius = 4;
+    const int anchorRadius = 8;
 
     void StartDrag(int index, int x, int y); // 开始拖动图形
     bool IsPointInShape(int x, int y, const Shape& shape); // 检查鼠标点击位置是否在图形内

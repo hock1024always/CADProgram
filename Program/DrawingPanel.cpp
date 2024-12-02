@@ -6,7 +6,7 @@
 using json = nlohmann::json;
 // 构造函数，初始化绘图面板并创建点状图
 DrawingPanel::DrawingPanel(wxFrame* parent)
-    : wxPanel(parent, wxID_ANY), pointGrid(this, 10) { // 设置点的间距为10像素
+    : wxPanel(parent, wxID_ANY), pointGrid(this, 15) { // 设置点的间距为10像素
     Bind(wxEVT_PAINT, &DrawingPanel::OnPaint, this);
     Bind(wxEVT_LEFT_DOWN, &DrawingPanel::OnLeftDown, this);
     Bind(wxEVT_LEFT_UP, &DrawingPanel::OnLeftUp, this);
@@ -128,15 +128,14 @@ void DrawingPanel::OnLeftUp(wxMouseEvent& event) {
         if (currentLine.startX != 0 || currentLine.startY != 0) {//说明起始点在锚点上，处理线的绘制
             int endX = event.GetX(); // 记录线的终点
             int endY = event.GetY();
-
             // 将终点坐标对齐到点状网格
             SnapToPoint(endX, endY);
-
-
-            // 计算最多三条平行于网格边的线段
-            std::vector<Line> segments = CalculateSegments(currentLine.startX, currentLine.startY, endX, endY);
-            // 将计算出的线段添加到线段列表中
-            lines.insert(lines.end(), segments.begin(), segments.end());
+            if (IsPointOnAnchor(endX, endY)) {
+                // 计算最多三条平行于网格边的线段
+                std::vector<Line> segments = CalculateSegments(currentLine.startX, currentLine.startY, endX, endY);
+                // 将计算出的线段添加到线段列表中
+                lines.insert(lines.end(), segments.begin(), segments.end());
+            }
         }
     }
     // 刷新面板以更新显示
@@ -155,7 +154,7 @@ void DrawingPanel::OnMotion(wxMouseEvent& event) {
         // 刷新面板以更新显示
         Refresh();
     }
-    else if (event.Dragging()) { // 如果没有拖动图形，但鼠标在拖动中（绘制线过程）
+    else if (event.Dragging()) {// 如果没有拖动图形，但鼠标在拖动中（绘制线过程）
         // 更新当前正在绘制的线的终点坐标
         currentLine.endX = event.GetX();
         currentLine.endY = event.GetY();
@@ -169,8 +168,8 @@ void DrawingPanel::OnMotion(wxMouseEvent& event) {
 // 将坐标对齐到点状网格
 void DrawingPanel::SnapToPoint(int& x, int& y) {
     // 将 x 和 y 坐标对齐到最近的网格点（每10个像素一个点）
-    x = (x / 10) * 10;
-    y = (y / 10) * 10;
+    x = (x / 15) * 15;
+    y = (y / 15) * 15;
 }
 
 // 计算最多三条平行于网格边的线段
@@ -218,24 +217,24 @@ bool DrawingPanel::IsPointInShape(int x, int y, const Shape& shape) {
     switch (shape.type) {
     case ShapeType::AndGate: {
         // 正方形的左上角为 (shape.x, shape.y)，宽高为 40
-        return x >= shape.x - 14 && x <= shape.x + 20 && y >= shape.y - 30 && y <= shape.y + 30;
+        return x >= shape.x - 22 && x <= shape.x + 30 && y >= shape.y - 45 && y <= shape.y + 45;
     }
 
     case ShapeType::OrGate: {
         // 圆的中心为 (shape.x , shape.y )，半径为 20
-        return x >= shape.x - 5 && x <= shape.x + 25 && y >= shape.y - 20 && y <= shape.y + 20;
+        return x >= shape.x - 7 && x <= shape.x + 38 && y >= shape.y - 30 && y <= shape.y + 30;
     }
 
     case ShapeType::NotGate: {
-        return x >= shape.x - 15 && x <= shape.x + 5 && y >= shape.y - 10 && y <= shape.y + 10;
+        return x >= shape.x - 22 && x <= shape.x + 8 && y >= shape.y - 15 && y <= shape.y + 15;
     }
 
     case ShapeType::OnPin: {
-        return x >= shape.x - 5 && x <= shape.x + 10 && y >= shape.y - 10 && y <= shape.y + 10;
+        return x >= shape.x - 8 && x <= shape.x + 15 && y >= shape.y - 15 && y <= shape.y + 15;
     }
 
     case ShapeType::OffPin: {
-        return x >= shape.x - 10 && x <= shape.x + 5 && y >= shape.y - 10 && y <= shape.y + 10;
+        return x >= shape.x - 15 && x <= shape.x + 8 && y >= shape.y - 15 && y <= shape.y + 15;
     }
 
     default:

@@ -2,17 +2,17 @@
     {
       "color": "red",
       "type": "Rectangle",
-      "x": -10,
-      "y": -10,
-      "width": 20,
-      "height": 20
+      "x": -15,
+      "y": -15,
+      "width": 30,
+      "height": 30
     },
     {
       "color": "black",
       "type": "Circle",
-      "x": 10,
+      "x": 15,
       "y": 0,
-      "radius": 2
+      "radius": 3
     }
   ]
   
