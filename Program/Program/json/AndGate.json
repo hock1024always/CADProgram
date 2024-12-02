@@ -1,0 +1,62 @@
+[
+  {
+    "color": "yellow",
+    "type": "Rectangle",
+    "x": -20,
+    "y": -30,
+    "width": 20,
+    "height": 60
+  },
+  {
+    "color": "yellow",
+    "type": "Arc",
+    "x1": 0,
+    "y1": 30,
+    "x2": 0,
+    "y2": -30,
+    "xc": 0,
+    "yc": 0
+  },
+  {
+    "color": "black",
+    "type": "Circle",
+    "x": -20,
+    "y": 10,
+    "radius": 2
+  },
+  {
+    "color": "black",
+    "type": "Circle",
+    "x": -20,
+    "y": -10,
+    "radius": 2
+  },  
+  {
+    "color": "black",
+    "type": "Circle",
+    "x": 30,
+    "y": 0,
+    "radius": 2
+  },  
+  {
+    "color": "black",
+    "type": "Circle",
+    "x": -20,
+    "y": 20,
+    "radius": 2
+  },  
+  {
+    "color": "black",
+    "type": "Circle",
+    "x": -20,
+    "y": -20,
+    "radius": 2
+  },  
+  {
+    "color": "black",
+    "type": "Circle",
+    "x": -20,
+    "y": 0,
+    "radius": 2
+  }
+]
