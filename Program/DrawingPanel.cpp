@@ -172,8 +172,8 @@ void DrawingPanel::OnMotion(wxMouseEvent& event) {
 // 将坐标对齐到点状网格
 void DrawingPanel::SnapToPoint(int& x, int& y) {
     // 将 x 和 y 坐标对齐到最近的网格点（每10个像素一个点）
-    x = (x / 10) * 10;
-    y = (y / 10) * 10;
+    x = (x / 15) * 15;
+    y = (y / 15) * 15;
 }
 
 // 计算最多三条平行于网格边的线段
@@ -221,24 +221,24 @@ bool DrawingPanel::IsPointInShape(int x, int y, const Shape& shape) {
     switch (shape.type) {
     case ShapeType::AndGate: {
         // 正方形的左上角为 (shape.x, shape.y)，宽高为 40
-        return x >= shape.x - 14 && x <= shape.x + 20 && y >= shape.y - 30 && y <= shape.y + 30;
+        return x >= shape.x - 22 && x <= shape.x + 30 && y >= shape.y - 45 && y <= shape.y + 45;
     }
 
     case ShapeType::OrGate: {
         // 圆的中心为 (shape.x , shape.y )，半径为 20
-        return x >= shape.x - 5 && x <= shape.x + 25 && y >= shape.y - 20 && y <= shape.y + 20;
+        return x >= shape.x - 7 && x <= shape.x + 38 && y >= shape.y - 30 && y <= shape.y + 30;
     }
 
     case ShapeType::NotGate: {
-        return x >= shape.x - 15 && x <= shape.x + 5 && y >= shape.y - 10 && y <= shape.y + 10;
+        return x >= shape.x - 22 && x <= shape.x + 8 && y >= shape.y - 15 && y <= shape.y + 15;
     }
 
     case ShapeType::OnPin: {
-        return x >= shape.x - 5 && x <= shape.x + 10 && y >= shape.y - 10 && y <= shape.y + 10;
+        return x >= shape.x - 8 && x <= shape.x + 15 && y >= shape.y - 15 && y <= shape.y + 15;
     }
 
     case ShapeType::OffPin: {
-        return x >= shape.x - 10 && x <= shape.x + 5 && y >= shape.y - 10 && y <= shape.y + 10;
+        return x >= shape.x - 15 && x <= shape.x + 8 && y >= shape.y - 15 && y <= shape.y + 15;
     }
 
     default:

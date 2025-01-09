@@ -2,61 +2,61 @@
   {
     "color": "yellow",
     "type": "Rectangle",
-    "x": -20,
-    "y": -30,
-    "width": 20,
-    "height": 60
+    "x": -30,
+    "y": -45,
+    "width": 30,
+    "height": 90
   },
   {
     "color": "yellow",
     "type": "Arc",
     "x1": 0,
-    "y1": 30,
+    "y1": 45,
     "x2": 0,
-    "y2": -30,
+    "y2": -45,
     "xc": 0,
     "yc": 0
   },
   {
     "color": "black",
     "type": "Circle",
-    "x": -20,
-    "y": 10,
-    "radius": 2
+    "x": -30,
+    "y": 30,
+    "radius": 3
   },
   {
     "color": "black",
     "type": "Circle",
-    "x": -20,
-    "y": -10,
-    "radius": 2
-  },  
+    "x": -30,
+    "y": -15,
+    "radius": 3
+  },
   {
     "color": "black",
     "type": "Circle",
-    "x": 30,
+    "x": 45,
     "y": 0,
-    "radius": 2
-  },  
+    "radius": 3
+  },
   {
     "color": "black",
     "type": "Circle",
-    "x": -20,
-    "y": 20,
-    "radius": 2
-  },  
+    "x": -30,
+    "y": 15,
+    "radius": 3
+  },
   {
     "color": "black",
     "type": "Circle",
-    "x": -20,
-    "y": -20,
-    "radius": 2
-  },  
+    "x": -30,
+    "y": -30,
+    "radius": 3
+  },
   {
     "color": "black",
     "type": "Circle",
-    "x": -20,
+    "x": -30,
     "y": 0,
-    "radius": 2
+    "radius": 3
   }
 ]

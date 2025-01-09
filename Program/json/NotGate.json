@@ -1,33 +1,33 @@
 [
-    {
-      "color": "yellow",
-      "type": "Polygon",
-      "x1": 0,
-      "y1": 0,
-      "x2": -20,
-      "y2": 10,
-      "x3": -20,
-      "y3": -10 
-    },
-    {
-      "color": "yellow",
-      "type": "Circle",
-      "x": 5,
-      "y": 0,
-      "radius": 5
-    },
-    {
-      "color": "black",
-      "type": "Circle",
-      "x": -20,
-      "y": 0,
-      "radius": 2
-    },
-    {
-      "color": "black",
-      "type": "Circle",
-      "x": 10,
-      "y": 0,
-      "radius": 2
-    }
-  ]
+  {
+    "color": "yellow",
+    "type": "Polygon",
+    "x1": 0,
+    "y1": 0,
+    "x2": -30,
+    "y2": 15,
+    "x3": -30,
+    "y3": -15
+  },
+  {
+    "color": "yellow",
+    "type": "Circle",
+    "x": 7.5,
+    "y": 0,
+    "radius": 5
+  },
+  {
+    "color": "black",
+    "type": "Circle",
+    "x": -30,
+    "y": 0,
+    "radius": 3
+  },
+  {
+    "color": "black",
+    "type": "Circle",
+    "x": 15,
+    "y": 0,
+    "radius": 3
+  }
+]

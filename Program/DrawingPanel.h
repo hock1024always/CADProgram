@@ -40,7 +40,7 @@ private:
     std::vector<std::pair<std::vector<Shape>, std::vector<Line>>> redoStack; // 重做堆栈
 
     // 新增常量：锚点的判断域半径
-    const int anchorRadius = 4;
+    const int anchorRadius = 8;
 
     void StartDrag(int index, int x, int y); // 开始拖动图形
     bool IsPointInShape(int x, int y, const Shape& shape); // 检查鼠标点击位置是否在图形内
