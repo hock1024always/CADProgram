@@ -34,6 +34,8 @@ private:
     std::vector<AnchorPoint> anchorPoints; // 存储锚点的列表
     Line currentLine; // 当前正在绘制的线条
     bool dragging = false; // 是否正在拖动图形的标志
+    AnchorPoint currentpoint = AnchorPoint(0, 0);
+    int anchorindexpainting = -1;
     int dragIndex = -1; // 当前拖动的图形索引
     int dragOffsetX = 0, dragOffsetY = 0; // 拖动图形的偏移量
     std::vector<std::pair<std::vector<Shape>, std::vector<Line>>> undoStack; // 撤销堆栈

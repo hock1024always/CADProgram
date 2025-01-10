@@ -65,6 +65,20 @@ void DrawingPanel::OnPaint(wxPaintEvent& event) {
         dc.SetBrush(*wxWHITE_BRUSH);
     }
 
+    if (anchorindexpainting == 1) {
+        dc.SetPen(wxPen(wxColour(255, 20, 147))); // 恢复粉色画笔
+        //dc.SetBrush(wxBrush(wxColour(255, 20, 147)));恢复粉色画刷
+        wxPoint points1[5] = {
+            wxPoint(currentpoint.x - 8, currentpoint.y + 8),
+            wxPoint(currentpoint.x - 8, currentpoint.y - 8),
+            wxPoint(currentpoint.x + 8, currentpoint.y - 8),
+            wxPoint(currentpoint.x + 8, currentpoint.y + 8),
+            wxPoint(currentpoint.x - 8, currentpoint.y + 8)
+        };
+        dc.DrawLines(5, points1);
+        //dc.DrawCircle(currentpoint.x, currentpoint.y, 8);
+    }
+
     for (const auto& line : lines) {
         dc.DrawLine(line.startX, line.startY, line.endX, line.endY);
     }
@@ -77,9 +91,9 @@ bool DrawingPanel::IsPointOnAnchor(int x, int y) {
         for (const auto& anchor : anchorPoints) {
             // 计算点击点与锚点的距离
             double distance = std::sqrt(std::pow(x - anchor.x, 2) + std::pow(y - anchor.y, 2));
-
             // 如果距离小于等于锚点的判断域半径，则认为在锚点上
             if (distance <= anchorRadius) {
+                currentpoint = AnchorPoint(anchor.x, anchor.y);
                 return true;
             }
         }
@@ -99,8 +113,8 @@ void DrawingPanel::OnLeftDown(wxMouseEvent& event) {
     // 检查是否点击在某个锚点的判断域内
     if (IsPointOnAnchor(mouseX, mouseY)) {
         // 如果点击在锚点上，记录锚点坐标为起点
-        currentLine.startX = mouseX;
-        currentLine.startY = mouseY;
+        currentLine.startX = currentpoint.x;
+        currentLine.startY = currentpoint.y;
         return; // 退出函数
     }
 
@@ -132,6 +146,13 @@ void DrawingPanel::OnLeftUp(wxMouseEvent& event) {
 
             // 将终点坐标对齐到点状网格
             SnapToPoint(endX, endY);
+
+            if (IsPointOnAnchor(endX, endY)) {
+                // 如果点击在锚点上，记录锚点坐标为起点
+                endX = currentpoint.x;
+                endY = currentpoint.y;
+            }
+
             //保存当前状态到回退堆栈
             undoStack.push_back({ shapes, lines });
             redoStack.clear();
@@ -167,13 +188,29 @@ void DrawingPanel::OnMotion(wxMouseEvent& event) {
         // 刷新面板以更新显示
         Refresh();
     }
+    int mouseX = event.GetX();
+    int mouseY = event.GetY();
+
+    // 将鼠标坐标对齐到点状网格（每10个像素一个点）
+    SnapToPoint(mouseX, mouseY);
+    // 检查是否点击在某个锚点的判断域内
+    if (IsPointOnAnchor(mouseX, mouseY)) {
+        // 如果点击在锚点上，记录锚点坐标为起点
+        anchorindexpainting = 1;
+        Refresh();
+        }
+        else {
+        anchorindexpainting = -1;
+        Refresh(); 
+    }
+    Refresh();
 }
 
 // 将坐标对齐到点状网格
 void DrawingPanel::SnapToPoint(int& x, int& y) {
     // 将 x 和 y 坐标对齐到最近的网格点（每10个像素一个点）
-    x = (x / 15) * 15;
-    y = (y / 15) * 15;
+    x = (x / 10) * 10;
+    y = (y / 10) * 10;
 }
 
 // 计算最多三条平行于网格边的线段

@@ -32,34 +32,34 @@ struct Shape {
         std::vector<AnchorPoint>AnchorPoint;
         switch (type) {
         case ShapeType::AndGate:
-            AnchorPoint.emplace_back(x - 20, y + 10);
-            AnchorPoint.emplace_back(x - 20, y - 10);
-            AnchorPoint.emplace_back(x + 30, y);
-            AnchorPoint.emplace_back(x - 20, y + 20);
-            AnchorPoint.emplace_back(x - 20, y - 20);
-            AnchorPoint.emplace_back(x - 20, y);
+            AnchorPoint.emplace_back(x - 30, y + 30);
+            AnchorPoint.emplace_back(x - 30, y - 15);
+            AnchorPoint.emplace_back(x + 45, y);
+            AnchorPoint.emplace_back(x - 30, y + 15);
+            AnchorPoint.emplace_back(x - 30, y - 30);
+            AnchorPoint.emplace_back(x - 30, y);
             break;
         
         case ShapeType::OrGate:
-            AnchorPoint.emplace_back(x - 10, y + 20);
-            AnchorPoint.emplace_back(x - 10, y - 20);
-            AnchorPoint.emplace_back(x - 10, y + 10);
-            AnchorPoint.emplace_back(x - 10, y - 10);
-            AnchorPoint.emplace_back(x - 10, y);
-            AnchorPoint.emplace_back(x + 30, y);
+            AnchorPoint.emplace_back(x - 15, y + 30);
+            AnchorPoint.emplace_back(x - 15, y - 30);
+            AnchorPoint.emplace_back(x - 15, y + 15);
+            AnchorPoint.emplace_back(x - 15, y - 15);
+            AnchorPoint.emplace_back(x - 15, y);
+            AnchorPoint.emplace_back(x + 45, y);
             break;
         
         case ShapeType::NotGate:
-            AnchorPoint.emplace_back(x - 20, y);
-            AnchorPoint.emplace_back(x + 10, y);
+            AnchorPoint.emplace_back(x - 30, y);
+            AnchorPoint.emplace_back(x + 15, y);
             break;
         
         case ShapeType::OnPin:
-            AnchorPoint.emplace_back(x - 10, y);
+            AnchorPoint.emplace_back(x - 15, y);
             break;
         
         case ShapeType::OffPin:
-            AnchorPoint.emplace_back(x + 10, y);
+            AnchorPoint.emplace_back(x + 15, y);
             break;
 
         }
