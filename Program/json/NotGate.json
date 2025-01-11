@@ -1,0 +1,33 @@
+[
+  {
+    "color": "yellow",
+    "type": "Polygon",
+    "x1": 0,
+    "y1": 0,
+    "x2": -30,
+    "y2": 15,
+    "x3": -30,
+    "y3": -15
+  },
+  {
+    "color": "yellow",
+    "type": "Circle",
+    "x": 7.5,
+    "y": 0,
+    "radius": 5
+  },
+  {
+    "color": "black",
+    "type": "Circle",
+    "x": -30,
+    "y": 0,
+    "radius": 3
+  },
+  {
+    "color": "black",
+    "type": "Circle",
+    "x": 15,
+    "y": 0,
+    "radius": 3
+  }
+]

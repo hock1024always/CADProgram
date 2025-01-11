@@ -1,0 +1,18 @@
+[
+  {
+    "color": "red",
+    "type": "Rectangle",
+    "x": -15,
+    "y": -15,
+    "width": 30,
+    "height": 30
+  },
+  {
+    "color": "black",
+    "type": "Circle",
+    "x": 15,
+    "y": 0,
+    "radius": 3
+  }
+]
+  

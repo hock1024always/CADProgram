@@ -1,8 +1,12 @@
-# EDA-Program
-This program is designed 4 our UESTC sophomore comprehensive program. 
+24_10_31第二次提交
+菜单栏里增加了窗口功能，可以实现对窗口的改动。
 
-Collaborate by Zhou Gao and Li
+改动文件有：sidebar.h,
 
-由于这个项目的搭建环境和项目依赖内存不好管理，因此我们将这个项目的前期组件以一个个md文件的形式放置
+sidebar.cpp.
 
-每一个文件夹代表一种组件 每一个md文件中放置的是一个组件案例以及学习笔记
+24_12_1
+
+增加了文件的回退，前进功能，放在编辑菜单下面
+
+改动文件有sidebar.h,sideabr.cpp,drawingpanel.h,drawingpanel.cpp
